@@ -4,12 +4,14 @@ const btnPad = document.querySelector('.btn-pad');
 let savedOperand = '';
 let currOperator = '';
 
-
 class calc {
     constructor(firstValue,secondValue){
         this.firstOperand = firstValue;
         // this.Operator = Operator;
         this.secondValue = secondValue;
+    }
+    operateFunc = () => {
+        console.log('operating function');
     }    
 }
 
@@ -23,6 +25,7 @@ clearAll = () => {
     currOperator = '';
 }
 
+// enter the input
 typingDigits = (target) => {
     if(target.dataset.action === 'type'){
         if(numDisplay.textContent === '0'){
@@ -36,16 +39,19 @@ typingDigits = (target) => {
 
 btnPad.addEventListener('click', e => {
     const {target} = e;
-    
     currDisplay.textContent = target.dataset.value;
     typingDigits(target);
+
+    if (target.dataset.action !== 'opr') {
+        return;
+    }
     
-    let currentOperand = numDisplay.textContent;
+    let currentOperand = numDisplay.textContent;  // get the value in calculator display
+    numDisplay.textContent = 0;                  // clear the display for new input
     
     
     newCal = new calc(savedOperand, currentOperand);
     newCal.operateFunc();
     
-    savedOperand = currentOperand;
-    currOperator = operator;
+    // savedOperand = currentOperand;
 })
