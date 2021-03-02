@@ -1,51 +1,53 @@
-const currbtn = document.querySelector('.currentbtn');
-const nums = document.querySelector('.nums');
-const btns = document.querySelectorAll('.btn');
+const currDisplay = document.querySelector('.currDisplay');
+const numDisplay = document.querySelector('.numDisplay');
+const btnPad = document.querySelector('.btn-pad');
+let savedOperand = '';
+let currOperator = '';
 
 
-class calculator {
-    constructor(displayVal,firstOperand,operator,secondOperand){
-        this.displayVal = displayVal;
-        this.firstOperand =  firstOperand;
-        this.secondOperand = secondOperand;
-        this.operator = operator;
+class calc {
+    constructor(firstValue,secondValue){
+        this.firstOperand = firstValue;
+        // this.Operator = Operator;
+        this.secondValue = secondValue;
     }
-    updateDisplay(){
-        nums.textContent = this.displayVal;
-    }
-};
-
-const calculator1 = new calculator('0','null','null','null');
-calculator1.updateDisplay();
-
-
-if(calculator1.firstOperand == 'null'){
-    btns.forEach(btn => {
-        btn.addEventListener('click', e => {
-            const cls = e.target.getAttribute('class');
-            const btnVal = e.target.getAttribute('btn-value');
     
-            currbtn.textContent = btnVal;
      
-            if(cls.includes('b-nums')) {
-                nums.innerHTML += `${btnVal}`;
-            }
-    
-            if(cls.includes('opr')){
-                
-                // const calculator3 = new calculator(nums.textContent,nums.textContent,e.target.textContent,'null');
-                // console.log(calculator3);
-                
-    
-                // calculator1.updateDisplay(); 
-            }
-        })
-    });
-
-    calculaotr2 = new calculator(nums.textContent,nums.textContent,)
-    console.log(calculator2);
-
-}else{
-    console.log('notnull');
-
 }
+
+clear = () => {
+    numDisplay.textContent = 0;
+}
+
+clearAll = () => {
+    clear();
+    savedOperand = '';
+    currOperator = '';
+}
+
+typingDigits = (target) => {
+    if(target.dataset.action === 'type'){
+        if(numDisplay.textContent === '0'){
+            numDisplay.textContent = target.dataset.value;
+            return; 
+        }else{
+            numDisplay.textContent += target.dataset.value;
+        }
+    }
+}
+
+btnPad.addEventListener('click', e => {
+    const target = e.target;
+    
+    currDisplay.textContent = target.dataset.value;
+    typingDigits(target);
+    
+    let currentOperand = numDisplay.textContent;
+    
+    
+    newCal = new calc(savedOperand, currentOperand);
+    newCal.operateFunc();
+    
+    savedOperand = currentOperand;
+    currOperator = operator;
+})
