@@ -10,9 +10,7 @@ class calc {
         this.firstOperand = firstValue;
         // this.Operator = Operator;
         this.secondValue = secondValue;
-    }
-    
-     
+    }    
 }
 
 clear = () => {
@@ -37,7 +35,7 @@ typingDigits = (target) => {
 }
 
 btnPad.addEventListener('click', e => {
-    const target = e.target;
+    const {target} = e;
     
     currDisplay.textContent = target.dataset.value;
     typingDigits(target);
