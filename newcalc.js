@@ -3,15 +3,24 @@ const numDisplay = document.querySelector('.numDisplay');
 const btnPad = document.querySelector('.btn-pad');
 let savedOperand = '';
 let currOperator = '';
+let operator = '';
 
+const operatingObject = {
+    '': function(firstValue, secondValue) {return secondValue;},
+    '+': function(firstValue, secondValue) {return firstValue + secondValue;},
+    '-': function(firstValue, secondValue) {return firstValue - secondValue;},
+    '*': function(firstValue, secondValue) {return firstValue * secondValue;},
+    '/': function(firstValue, secondValue) {return firstValue / secondValue;}
+}
 class calc {
     constructor(firstValue,secondValue){
         this.firstOperand = firstValue;
-        // this.Operator = Operator;
-        this.secondValue = secondValue;
+        this.secondOperand = secondValue;
     }
-    operateFunc = () => {
+
+    operateFunc = (operator) => {
         console.log('operating function');
+        operatingObject[operator](this.firstOperand, this.secondOperand );
     }    
 }
 
@@ -23,10 +32,11 @@ clearAll = () => {
     clear();
     savedOperand = '';
     currOperator = '';
+    operator = '';
 }
 
 // enter the input
-typingDigits = (target) => {
+inputDigit = (target) => {
     if(target.dataset.action === 'type'){
         if(numDisplay.textContent === '0'){
             numDisplay.textContent = target.dataset.value;
@@ -38,20 +48,24 @@ typingDigits = (target) => {
 }
 
 btnPad.addEventListener('click', e => {
-    const {target} = e;
+    const { target } = e ;
     currDisplay.textContent = target.dataset.value;
-    typingDigits(target);
+    inputDigit(target);
 
     if (target.dataset.action !== 'opr') {
         return;
     }
-    
+    console.log('savedOperand is ' + savedOperand);
     let currentOperand = numDisplay.textContent;  // get the value in calculator display
-    numDisplay.textContent = 0;                  // clear the display for new input
-    
-    
-    newCal = new calc(savedOperand, currentOperand);
-    newCal.operateFunc();
-    
-    // savedOperand = currentOperand;
+       
+    numDisplay.textContent = '';
+
+    console.log('operator is ' + operator);
+
+    const newCal = new calc(savedOperand, currentOperand);
+    savedOperand = newCal.operateFunc(operator);
+    console.log('result is ' + savedOperand);
+
+    operator = currDisplay.textContent;
+    savedOperand = currentOperand;
 })
