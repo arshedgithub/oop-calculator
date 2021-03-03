@@ -52,23 +52,26 @@ btnPad.addEventListener('click', e => {
     currDisplay.textContent = target.dataset.value;
     inputDigit(target);
 
-    if (target.dataset.action !== 'opr') {
+    if (target.dataset.action !== 'opr' ) {
         return;
+    } else if ( operator !== ''){
+        operator = currDisplay.textContent;
     }
+    
     console.log('savedOperand is ' + savedOperand);
     let currentOperand = numDisplay.textContent;  // get the value in calculator display
-       
-    numDisplay.textContent = '';
-
+    
+    
     console.log('operator is ' + operator +' ' + typeof(operator));
-
+    
     // const newCal = new calc(savedOperand, currentOperand);
     // savedOperand = newCal.operateFunc(operator);
     savedOperand = Number(savedOperand);
     currentOperand = Number(currentOperand);
     savedOperand = operatingObject[operator](savedOperand, currentOperand);  // calculating 
     console.log('result is ' + savedOperand);
-
+    numDisplay.textContent = savedOperand;
+    
+    numDisplay.textContent = '';
     operator = currDisplay.textContent;
-    savedOperand = currentOperand;
 })
