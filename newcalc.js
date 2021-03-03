@@ -12,17 +12,17 @@ const operatingObject = {
     '*': function(firstValue, secondValue) {return firstValue * secondValue;},
     '/': function(firstValue, secondValue) {return firstValue / secondValue;}
 }
-class calc {
-    constructor(firstValue,secondValue){
-        this.firstOperand = firstValue;
-        this.secondOperand = secondValue;
-    }
+// class calc {
+//     constructor(firstValue,secondValue){
+//         this.firstOperand = firstValue;
+//         this.secondOperand = secondValue;
+//     }
 
-    operateFunc = (operator) => {
-        console.log('operating function');
-        operatingObject[operator](this.firstOperand, this.secondOperand );
-    }    
-}
+//     operateFunc = (operator) => {
+//         console.log('operating function');
+//         operatingObject[operator](this.firstOperand, this.secondOperand );
+//     }    
+// }
 
 clear = () => {
     numDisplay.textContent = 0;
@@ -60,10 +60,13 @@ btnPad.addEventListener('click', e => {
        
     numDisplay.textContent = '';
 
-    console.log('operator is ' + operator);
+    console.log('operator is ' + operator +' ' + typeof(operator));
 
-    const newCal = new calc(savedOperand, currentOperand);
-    savedOperand = newCal.operateFunc(operator);
+    // const newCal = new calc(savedOperand, currentOperand);
+    // savedOperand = newCal.operateFunc(operator);
+    savedOperand = Number(savedOperand);
+    currentOperand = Number(currentOperand);
+    savedOperand = operatingObject[operator](savedOperand, currentOperand);  // calculating 
     console.log('result is ' + savedOperand);
 
     operator = currDisplay.textContent;
